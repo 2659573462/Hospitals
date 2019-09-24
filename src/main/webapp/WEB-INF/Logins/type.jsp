@@ -1,16 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>医院管理系统</title>
     <link rel="stylesheet" />
     <link rel="stylesheet" href="css/Site.css" />
     <link rel="stylesheet" href="css/zy.all.css" />
     <link rel="stylesheet" href="css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/amazeui.min.css" />
     <link rel="stylesheet" href="css/admin.css" />
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">;
+    <link href="/css/toastr.min.css" rel="stylesheet">;
     <style>
 
     </style>
@@ -109,7 +115,7 @@
                                 </tr>
                                 <tr>
                                     <td>9</td>
-                                    <td>五花肉5</td>
+                                    <td>五花肉</td>
                                     <td> </td>
                                     <td> </td>
                                     <td class="edit"><button onclick="btn_edit(9)"><i class="icon-edit bigger-120"></i>编辑</button></td>
@@ -127,8 +133,44 @@
 
                             </table>
                         </div>
-                        <!--分页显示角色信息 end-->
                     </li>
+                    <!--分页显示角色信息 end-->
+                    <div class="text-center">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <c:if test="${page.currentPage > 1}">
+                                    <li>
+                                        <a href="${pageScope.request.contextPath}/book/list?p=${page.currentPage - 1}">
+                                            <span>&laquo;</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                                <c:forEach begin="1" end="${page.pageCount}" step="1" var="p">
+                                    <c:if test="${page.currentPage == p}">
+                                        <li class="active">
+                                            <a href="${pageScope.request.contextPath}/book/list?p=${1}">${1}</a>
+                                        </li>
+                                    </c:if>
+                                    <c:if test="${page.currentPage != p}">
+                                        <li>
+                                            <a href="${pageScope.request.contextPath}/book/list?p=${2}">${2}</a>
+                                        </li>
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${page.currentPage < page.pageCount}">
+                                    <li>
+                                        <a href="${pageScope.request.contextPath}/book/list?p=${page.currentPage + 1}">
+                                            <span>&raquo;</span>
+                                        </a>
+                                    </li>
+                                </c:if>
+                            </ul>
+                        </nav>
+                    </div>
+
+
+
+
                 </ul>
                 <ul class="theme-popbod dform" style="display: none;">
                     <div class="am-cf admin-main" style="padding-top: 0px;">
@@ -188,11 +230,19 @@
     </div>
 
 
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="/js/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/my.js"></script>
+    <script src="/js/toastr.min.js"></script>
+
+
     <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
     <script src="js/plugs/Jqueryplugs.js" type="text/javascript"></script>
-    <script src="js/_layout.js"></script>
     <script src="js/plugs/jquery.SuperSlide.source.js"></script>
     <script>
+
         var num = 1;
         $(function() {
 
