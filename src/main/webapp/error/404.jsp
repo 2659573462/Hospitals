@@ -65,7 +65,7 @@
         <h1>404</h1>
         <p>对不起你访问的浏览器-丢失了!</p>
         <div class="sub">
-            <p><a href="#">Back</a></p>
+            <p><a href="/index.jsp">返回登陆</a></p>
         </div>
     </div>
 </div>

@@ -42,17 +42,16 @@ public class HospitalsServlet  extends BaseServlet {
                 CookieUtils.setCookie(LoginConstant.LOGIN_PASSWORD, password, 7 * 24 * 60 * 60, response);
             }
             //进去首页页面
-            return "/web/WEB-INF/Logins/logins.jsp";
+            return "/WEB-INF/Logins/logins.jsp";
+        }else{
+            //返回登陆界面错误页面
+            request.setAttribute("error","账号或者密码错误");
+            return "index.jsp";
         }
-        //返回登陆界面错误页面
-        request.setAttribute("error","账号或者密码错误");
-        return "/error/404.jsp";
     }
 
     public  String indexHospitaltaffS(HttpServletRequest request, HttpServletResponse response){
-
-
-        return null;
+        return "/WEB-INF/Logins/type.jsp";
     }
 
 

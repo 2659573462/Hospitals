@@ -28,7 +28,7 @@ public class LoginFilter implements Filter {
         // 判断请求的路径中是否包含需要放行的地址
         if (uri.contains("/css/") || uri.contains("/js/") ||
                 uri.contains("/fonts/") || uri.contains("/error/") ||
-                uri.contains("index.jsp") || uri.contains("/HospitalsServlet")) {
+                uri.contains("index.jsp") || uri.contains("/HospitalsServlet")||  uri.contains("/logins.jsp")) {
             chain.doFilter(req, resp);
         } else {
             // 1.获取session的用户
