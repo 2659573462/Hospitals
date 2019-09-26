@@ -22,13 +22,13 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        System.out.println("登陆");
         // 获取当前的请求路径
         String uri = request.getRequestURI();
         // 判断请求的路径中是否包含需要放行的地址
         if (uri.contains("/css/") || uri.contains("/js/") ||
                 uri.contains("/fonts/") || uri.contains("/error/") ||
-                uri.contains("index.jsp") || uri.contains("/HospitalsServlet")||  uri.contains("/logins.jsp")) {
+                uri.contains("index.jsp") || uri.contains("/HospitalsServlet")||  uri.contains("/logins.jsp")|| uri.contains("/*.eot")
+                || uri.contains("/*.svg")|| uri.contains("/*.ttf")|| uri.contains("/*.woff")|| uri.contains("/*.woff2")) {
             chain.doFilter(req, resp);
         } else {
             // 1.获取session的用户

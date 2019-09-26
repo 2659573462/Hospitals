@@ -26,10 +26,7 @@ public class IUserDaoImpl implements IUserDao {
         SQLContext sqlContext = SQLUtils.buildQuerySQL(user, defaultNameHandle);
         StringBuilder sql = sqlContext.getSql();
         String s = sql.toString();
-        System.out.println("这条sql语句是:"+sql);
         List<User> users = JDBCUtils.executeQuery(User.class, s, PwdUtils.getPwd(password),PwdUtils.getPwd(username));
-        System.out.println(PwdUtils.getPwd(password));
-        System.out.println(PwdUtils.getPwd(username));
         if (users!=null&&users.size()>0) {
             return users.get(0);
         }

@@ -28,14 +28,3 @@
 .ulleftsubitems {
     background-color:white;
 }
-.ulleftsubitems li {
-    text-indent:60px;   
-    background-image:url('../resources/images/menuline.jpg');       
-    background-repeat:no-repeat;
-    background-position:45px 0px;
-    border-bottom:1px dotted #E4E4E4;
-}
-.ulleftsubitems li:hover {
-    color:#2B7DBC !important;
-    background-image:url('../resources/images/menuarrow.jpg');   
-}

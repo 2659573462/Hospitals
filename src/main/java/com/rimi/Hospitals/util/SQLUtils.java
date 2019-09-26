@@ -4,6 +4,7 @@ import com.rimi.Hospitals.common.NameHandler;
 import com.rimi.Hospitals.common.SQLContext;
 import java.beans.BeanInfo;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;

@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
@@ -8,6 +7,14 @@
     <link href="../../css/zy.layout.css" rel="stylesheet" />
     <link href="../../css/zy.form.css" rel="stylesheet" />
 <%--    <link href="../../css/font-awesome.min.css" rel="stylesheet" />--%>
+    <script>
+        function sendAjax(){
+            $.post("/cards","?transmits=indexHospitaltaffS",function(result){
+                console.log(result);
+                alert(result);
+            },'json');
+        }
+    </script>
     <style type="text/css">
         .headerlitooleulsubitem_gray {
             background-Color: White;
@@ -235,37 +242,32 @@
         <li class="limenuitem">
             <i class="icon-cog menuicon"></i>系统菜单<b class="arrow icon-angle-down arrow-down"></b>
             <ul class="ulleftsubitems">
-                <a href="/HospitalsServlet?transmits=indexHospitaltaffS" target="right">
-                    <li>分类管理</li>
+                <a href="/HospitalsServlet?transmits=indexHospitaltaffS" target="right" onclick="sendAjax()">
+                    <li>主治医生管理</li>
                 </a>
-                <a href="inventory.html" target="right">
-                    <li>库存管理</li>
+                <a href="#" target="right">
+                    <li>护士管理</li>
                 </a>
-                <a href="inbound.html" target="right">
-                    <li>入库管理</li>
+                <a href="#" target="right">
+                    <li>病人管理</li>
                 </a>
-                <a href="warning.html" target="right">
-                    <li>预警信息设置</li>
+                <a href="#" target="right">
+                    <li>请假管理</li>
                 </a>
-                <a href="outBoud.html" target="right">
-                    <li>出库管理</li>
+                <a href="#" target="right">
+                    <li>药品管理</li>
                 </a>
-                <a href="user.html" target="right">
-                    <li>用户管理</li>
+                <a href="#" target="right">
+                    <li>科室管理</li>
                 </a>
-                <a href="updatePwd.html" target="right"><li >修改密码</li></a>
+                <a href="#" target="right"><li >修改密码</li></a>
             </ul>
         </li>
     </ul>
     <div style="position: absolute; left: 191px; right: 20px; ">
-        <iframe src="/HospitalsServlet?transmits=indexHospitaltaffS" scrolling="no" width="100%" height="1200" name="right" border="none"></iframe>
+        <iframe src="/HospitalsServlet?transmits=indexHospitaltaffS" scrolling="no" width="100%" height="898px" name="right" border="none"></iframe>
     </div>
 </div>
-<%--<script src="../../js/jquery-1.7.2.min.js" type="text/javascript"></script>--%>
-<%--<script src="../../js/plugs/Jqueryplugs.js" type="text/javascript"></script>--%>
-<%--<script src="js/_layout.js"></script>--%>
-
-
 
 </body>
 </html>
