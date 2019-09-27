@@ -2,28 +2,30 @@ package com.rimi.Hospitals.serice;
 
 import com.rimi.Hospitals.common.Page;
 import com.rimi.Hospitals.entity.Doctortable;
+import com.rimi.Hospitals.entity.nurse;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * 查询医生的serice
+ * 护士的数据的交互
  *
  * @author chenjin
- * @date 2019/9/25 17:15
+ * @date 2019/9/27 14:14
  */
-public interface IndexService {
+public interface nurseSerice {
     /**
-     * 查询所有的医生信息
+     * 查询所有的护士信息
      * @return
      */
-    List<Doctortable> selectDoctortable();
+    List<nurse> selectNurse();
+
 
     /**
      * 查询哪一条到哪里
      * @return
      */
-    List<Doctortable> selectListServlce(Integer currentPage, Integer pageSize);
+    List<nurse> selectListServlce(Integer currentPage, Integer pageSize);
 
 
 
@@ -33,10 +35,11 @@ public interface IndexService {
      * @param page 分页
      * @return 分页后的信息,这个针对的是book书对象的借阅信息
      */
-    Page<Doctortable> findPagedBooks(Page page);
+    Page<nurse> findPagedBooks(Page page);
 
     /**
-     * 传入医生的唯一工作号
+     * 传入护士的唯一工作号
+     * 删除这条数据
      * @param in
      * @return
      */
@@ -59,5 +62,6 @@ public interface IndexService {
      * @param id
      * @return
      */
-    Doctortable selectId(String id);
+    nurse selectId(String id);
+
 }

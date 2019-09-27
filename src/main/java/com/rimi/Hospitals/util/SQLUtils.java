@@ -118,7 +118,6 @@ public class SQLUtils {
         PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
         StringBuilder sql = new StringBuilder("select * from ");
         String tableName = nameHandler.getTableName(clazz.getSimpleName());
-        System.out.println("表名是:"+tableName);
         sql.append(tableName);
         sql.append(" where ");
         List<Object> params = new ArrayList<Object>();

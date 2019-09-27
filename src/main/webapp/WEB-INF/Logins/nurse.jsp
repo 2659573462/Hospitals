@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/amazeui.min.css" />
     <link rel="stylesheet" href="css/admin.css" />
     <style>
-        tr>td:nth-child(-n+6){
+        tr>td:nth-child(-n+4){
             text-indent:20px;
         }
 
@@ -28,20 +28,19 @@
             function modify(id) {
                 $.ajax({
                     type: "get",
-                    url: "${pageScope.request.contextPath}/HospitalsServlet?transmits=selectId",
+                    url: "${pageScope.request.contextPath}/HospitalsServlet?transmits=selectNurseId",
                     data: {"id": id},
                     success: function (result) {
+                        // alert(result)
                         var obj =JSON.parse(result);
-                        $("#employeescard").val(obj.employeescard)
-                        $("#doctorname").val(obj.doctorname)
+                        $("#nurseNumber").val(obj.nurseNumber)
+                        $("#patientsName").val(obj.patientsName)
                         if(obj.gender=="男"){
                             $('.form-horizontal input[type="radio"]:first').prop('checked', 'true')
                         }else{
                             $('.form-horizontal input[type="radio"]:last').prop('checked', 'true')
                         }
                         $("#age").val(obj.age)
-                        $("#subordinatedepartments").val(obj.subordinatedepartments)
-                        $("#educationbackground").val(obj.educationbackground)
                     }
                 }, 'json');
                 i++;
@@ -70,29 +69,25 @@
                             <table class="table" id="tbRecord">
                                 <thead>
                                 <tr>
-                                    <th>工作证号</th>
-                                    <th>医生名称</th>
+                                    <th>护士编号</th>
+                                    <th>护士姓名</th>
                                     <th>性别</th>
                                     <th>年龄</th>
-                                    <th>所属科室</th>
-                                    <th>学历</th>
                                     <th>编辑</th>
                                     <th>删除</th>
                                 </tr>
                                 <c:forEach items="${cards.pageData}" var="hospitals">
                                     <tr>
-                                        <td>${hospitals.employeescard}</td>
-                                        <td>${hospitals.doctorname}</td>
+                                        <td>${hospitals.nurseNumber}</td>
+                                        <td>${hospitals.patientsName}</td>
                                         <td>${hospitals.gender}</td>
                                         <td>${hospitals.age}</td>
-                                        <td>${hospitals.subordinatedepartments}</td>
-                                        <td>${hospitals.educationbackground}</td>
                                         <td>
-                                            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" onmouseover="modify('${hospitals.employeescard}')">
-                                            修改</a>
+                                            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" onmouseover="modify('${hospitals.nurseNumber}')">
+                                                修改</a>
                                         </td>
                                         <td>
-                                            <a class="btn btn-danger btn-sm del" href="#" onclick="btn_delete('${hospitals.employeescard}')" ><i class="icon-trash bigger-120" ></i>删除</a>
+                                            <a class="btn btn-danger btn-sm del" href="#" onclick="btn_delete('${hospitals.nurseNumber}')" ><i class="icon-trash bigger-120" ></i>删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -111,24 +106,24 @@
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
                             <li>
-                                <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=indexHospitaltaffS&p=${cards.currentPage-1}" aria-label="Previous">
+                                <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=selectNurse&p=${cards.currentPage-1}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             <c:forEach begin="1" end="${cards.pageCount}" step="1" var="p">
-                            <c:if test="${cards.currentPage == p}">
-                            <li >
-                                <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=indexHospitaltaffS&p=${p}">${p}</a>
-                            </li>
-                            </c:if>
-                            <c:if test="${cards.currentPage != p}">
-                            <li>
-                                 <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=indexHospitaltaffS&p=${p}">${p}</a>
-                             </li>
-                            </c:if>
+                                <c:if test="${cards.currentPage == p}">
+                                    <li >
+                                        <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=selectNurse&p=${p}">${p}</a>
+                                    </li>
+                                </c:if>
+                                <c:if test="${cards.currentPage != p}">
+                                    <li>
+                                        <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=selectNurse&p=${p}">${p}</a>
+                                    </li>
+                                </c:if>
                             </c:forEach>
                             <li>
-                                <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=indexHospitaltaffS&p=${cards.currentPage+1}" aria-label="Next">
+                                <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=selectNurse&p=${cards.currentPage+1}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
@@ -148,28 +143,27 @@
 
                                     <div class="am-g">
                                         <div class="am-u-sm-12 am-u-md-4 am-u-md-push-8">
-
                                         </div>
                                         <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4"
                                              style="padding-top: 30px;">
                                             <form class="am-form am-form-horizontal"
-                                                  action="${pageScope.request.contextPath}/HospitalsServlet?transmits=addHospitals" method="post">
+                                                  action="${pageScope.request.contextPath}/HospitalsServlet?transmits=addNurse" method="post">
 
                                                 <div class="am-form-group">
                                                     <label for="user-name" class="am-u-sm-3 am-form-label">
-                                                        工作证号</label>
+                                                        护士编号</label>
                                                     <div class="am-u-sm-9">
                                                         <input type="text" id="user-name" required
-                                                               placeholder="" name="employeescard">
+                                                               placeholder="" name="nurseNumber">
                                                     </div>
                                                 </div>
 
                                                 <div class="am-form-group">
                                                     <label for="user-name" class="am-u-sm-3 am-form-label">
-                                                        医生姓名</label>
+                                                        护士姓名</label>
                                                     <div class="am-u-sm-9">
                                                         <input type="text"  required
-                                                               placeholder="" name="doctorname">
+                                                               placeholder="" name="patientsName">
                                                     </div>
                                                 </div>
 
@@ -186,32 +180,15 @@
                                                     <label for="user-name" class="am-u-sm-3 am-form-label">
                                                         年龄</label>
                                                     <div class="am-u-sm-9">
-                                                        <input type="text" id=""  required
+                                                        <input type="text"  required
                                                                placeholder="" name="age">
                                                     </div>
                                                 </div>
 
-                                                <div class="am-form-group">
-                                                    <label for="user-name" class="am-u-sm-3 am-form-label">
-                                                        所属科室</label>
-                                                    <div class="am-u-sm-9">
-                                                        <input type="text" required
-                                                               placeholder="" name="subordinatedepartments">
-                                                    </div>
-                                                </div>
-
-                                                <div class="am-form-group">
-                                                    <label for="user-name" class="am-u-sm-3 am-form-label">
-                                                        学历</label>
-                                                    <div class="am-u-sm-9">
-                                                        <input type="text"  required
-                                                               placeholder="" name="educationbackground">
-                                                    </div>
-                                                </div>
 
                                                 <div class="am-form-group">
                                                     <div class="am-u-sm-9 am-u-sm-push-3">
-                                                        <input type="submit" class="am-btn am-btn-success" value="添加医生" />
+                                                        <input type="submit" class="am-btn am-btn-success" value="添加护士" />
                                                     </div>
                                                 </div>
                                             </form>
@@ -242,27 +219,27 @@
                         <div class="container">
 
                             <div class="row">
-                                <form class="form-horizontal" action="${pageScope.request.contextPath}/HospitalsServlet?transmits=updateHospitals"
+                                <form class="form-horizontal" action="${pageScope.request.contextPath}/HospitalsServlet?transmits=updateNurse"
                                       method="post">
                                     <div style="width:900px;" class="form-group">
-                                        <label for="employeescard" class="col-md-2 control-label">工作证号:</label>
+                                        <label for="nurseNumber" class="col-md-2 control-label">护士编号:</label>
                                         <div class="col-md-6">
-                                            <input style="width:300px;" type="text" class="form-control" id="employeescard"
-                                                   name="employeescard" />
+                                            <input style="width:300px;" type="text" class="form-control" id="nurseNumber"
+                                                   name="nurseNumber" />
                                         </div>
                                     </div>
                                     <div style="width:900px;" class="form-group">
-                                        <label for="doctorname" class="col-md-2 control-label">医生名称:</label>
+                                        <label for="patientsName" class="col-md-2 control-label">护士姓名:</label>
                                         <div class="col-md-6">
                                             <input style="width:300px;" type="text" class="form-control"
-                                                   id="doctorname" name="doctorname"  />
+                                                   id="patientsName" name="patientsName"  />
                                         </div>
                                     </div>
                                     <div style="width:900px;" class="form-group">
                                         <label  class="col-md-2 control-label">性别:</label>
                                         <div class="col-md-6">
-                                            <input  type="radio"  name="gender" value="男" />男
-                                            <input  type="radio"  name="gender" value="女"/>女
+                                            <input  type="radio" name="gender" value="男" />男
+                                            <input  type="radio" name="gender" value="女"/>女
                                         </div>
                                     </div>
                                     <div style="width:900px;" class="form-group">
@@ -272,24 +249,12 @@
                                                    name="age"  min="0" value="0" onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="请输入数字")/>
                                         </div>
                                     </div>
-                                    <div style="width:900px;" class="form-group">
-                                        <label for="subordinatedepartments" class="col-md-2 control-label">所属科室：</label>
-                                        <div class="col-md-6">
-                                            <input style="width:300px;" type="text" class="form-control" id="subordinatedepartments"
-                                                   name="subordinatedepartments" />
-                                        </div>
-                                    </div>
-                                    <div style="width:900px;" class="form-group">
-                                        <label for="educationbackground" class="col-md-2 control-label">学历:</label>
-                                        <div class="col-md-6">
-                                            <input style="width:300px;" type="text"  class="form-control"
-                                                   id="educationbackground" name="educationbackground"  />
-                                        </div>
-                                    </div>
                                     <div style="width:560px;" class="form-group text-center">
                                         <button type="submit" class="btn btn-primary"   >提交</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                                     </div>
+
+
                                 </form>
                             </div>
                         </div>
@@ -333,12 +298,13 @@
             });
         }
         var btn_delete = function(id) {
+
             $.jq_Confirm({
                 message: "您确定要删除吗?",
                 btnOkClick: function() {
                     $.ajax({
                         type: "get",
-                        url: "${pageScope.request.contextPath}/HospitalsServlet?transmits=deleteHospitals",
+                        url: "${pageScope.request.contextPath}/HospitalsServlet?transmits=deleteNurse",
                         data: { id: id },
                         success: function(result) {
                             if(result) {
@@ -346,6 +312,7 @@
                                 // alert("用户名可以被使用");
                                 message: "删除成功";
                                 window.location.reload();
+
                             }
                         }
                     });

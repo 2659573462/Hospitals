@@ -1,20 +1,21 @@
 package com.rimi.Hospitals.dao;
 
-import com.rimi.Hospitals.entity.Doctortable;
+import com.rimi.Hospitals.entity.Patients;
+import com.rimi.Hospitals.entity.nurse;
 
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author chenjin
- * @date 2019/9/25 17:22
+ * @date 2019/9/27 20:45
  */
-public interface DoctortableDao {
+public interface patientsDao {
     /**
      * 查询所有的数据
      * @return
      */
-    List<Doctortable> selectDoctortables();
+    List<Patients> selectNurseTable();
 
     /**
      * 查询数据多少到多少
@@ -22,7 +23,7 @@ public interface DoctortableDao {
      * @param pageSize
      * @return
      */
-    List<Doctortable> selectLin(Integer currentPage, Integer pageSize);
+    List<Patients> selectLin(Integer currentPage, Integer pageSize);
 
     /**
      * 查询数据的总数
@@ -31,28 +32,29 @@ public interface DoctortableDao {
     Integer count();
 
     /**
-     * 删除医生数据更具医生的工号
+     * 删除患者数据更具医生的工号
      * @param in
      * @return
      */
-    int deleteHosp(String in);
+    int deleteNurse(String in);
 
     /**
-     * 添加医生数据
+     * 添加患者数据
      * @param params
      */
-    void addHospitals(Map<String, String[]> params);
+    void addNurse(Map<String, String[]> params);
 
     /**
-     * 更新医生数据
+     * 更新患者数据
      * @param parameterMap
      */
-    void updateHospitals(Map<String, String[]> parameterMap);
+    void updateNurse(Map<String, String[]> parameterMap);
 
     /**
      * 根据id获取数据
      * @param id
      * @return
      */
-    Doctortable selectId(String id);
+    Patients selectId(String id);
+
 }

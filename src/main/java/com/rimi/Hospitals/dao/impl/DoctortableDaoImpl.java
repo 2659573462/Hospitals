@@ -77,7 +77,35 @@ public class DoctortableDaoImpl implements DoctortableDao {
                 params.get("age")[0],
                 params.get("subordinatedepartments")[0],
                 params.get("educationbackground")[0]);
-        System.out.println("添加医生对象个数"+i);
+    }
+
+    /**
+     * 更细数据
+     * @param parameterMap
+     */
+    @Override
+    public void updateHospitals(Map<String, String[]> parameterMap) {
+        //1.定义sql
+        String sql ="update _doctortable set employeescard=?,  doctorname=? , gender=?, age=?, subordinatedepartments=? , educationbackground= ?  where employeescard =?";
+        //2.执行sql语句
+        int i = JDBCUtils.executeUpdate(sql,
+                parameterMap.get("employeescard")[0],
+                parameterMap.get("doctorname")[0],
+                parameterMap.get("gender")[0],
+                parameterMap.get("age")[0],
+                parameterMap.get("subordinatedepartments")[0],
+                parameterMap.get("educationbackground")[0],
+                parameterMap.get("employeescard")[0]);
+    }
+
+    @Override
+    public Doctortable selectId(String id) {
+       String sql = "select * from _doctortable where employeescard=?";
+        List<Doctortable> doctortables = JDBCUtils.executeQuery(Doctortable.class, sql, id);
+        if (doctortables!=null) {
+            return doctortables.get(0);
+        }
+        return null;
     }
 
 }

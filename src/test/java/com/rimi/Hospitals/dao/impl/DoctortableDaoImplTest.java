@@ -5,7 +5,9 @@ import com.rimi.Hospitals.entity.Doctortable;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -20,8 +22,15 @@ public class DoctortableDaoImplTest {
     @Test
     public void selectDoctortables() {
         DoctortableDaoImpl doctortableDao = new DoctortableDaoImpl();
-        List<Doctortable> doctortables = doctortableDao.selectDoctortables();
-        System.out.println(doctortables);
-        System.out.println(doctortables.size()+"个");
+        Map<String, String[]> stringMap = new HashMap<>();
+        String[] strings = new String[2];
+        strings[0]="35";
+        stringMap.put("employeescard",strings);
+        stringMap.put("doctorname",strings);
+        stringMap.put("gender",strings);
+        stringMap.put("age",strings);
+        stringMap.put("subordinatedepartments",strings);
+        stringMap.put("educationbackground",strings);
+        doctortableDao.updateHospitals(stringMap);
     }
 }

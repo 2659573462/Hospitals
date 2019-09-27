@@ -2,19 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>@ViewBag.Title</title>
+    <title>医院管理系统</title>
     <link href="../../css/Site.css" rel="stylesheet" type="text/css" />
     <link href="../../css/zy.layout.css" rel="stylesheet" />
     <link href="../../css/zy.form.css" rel="stylesheet" />
 <%--    <link href="../../css/font-awesome.min.css" rel="stylesheet" />--%>
-    <script>
-        function sendAjax(){
-            $.post("/cards","?transmits=indexHospitaltaffS",function(result){
-                console.log(result);
-                alert(result);
-            },'json');
-        }
-    </script>
     <style type="text/css">
         .headerlitooleulsubitem_gray {
             background-Color: White;
@@ -218,7 +210,7 @@
 <body>
 <div class="dvheader">
     <div class="dvheadertools">
-        <span class="headerspantitle">进销存管理系统</span>
+        <span class="headerspantitle">医院管理系统</span>
         <ul class="headerultools">
 
             <li class="headerlitools_info headerlitools" style="background-color: #075597">
@@ -242,13 +234,13 @@
         <li class="limenuitem">
             <i class="icon-cog menuicon"></i>系统菜单<b class="arrow icon-angle-down arrow-down"></b>
             <ul class="ulleftsubitems">
-                <a href="/HospitalsServlet?transmits=indexHospitaltaffS" target="right" onclick="sendAjax()">
+                <a href="/HospitalsServlet?transmits=indexHospitaltaffS" target="right" >
                     <li>主治医生管理</li>
                 </a>
-                <a href="#" target="right">
+                <a href="/HospitalsServlet?transmits=selectNurse" target="right">
                     <li>护士管理</li>
                 </a>
-                <a href="#" target="right">
+                <a href="/HospitalsServlet?transmits=indexPatients" target="right">
                     <li>病人管理</li>
                 </a>
                 <a href="#" target="right">
