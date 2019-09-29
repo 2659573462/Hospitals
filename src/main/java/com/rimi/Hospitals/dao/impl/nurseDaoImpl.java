@@ -4,7 +4,9 @@ import com.rimi.Hospitals.dao.nurseDao;
 import com.rimi.Hospitals.entity.Doctortable;
 import com.rimi.Hospitals.entity.nurse;
 import com.rimi.Hospitals.util.JDBCUtils;
+import com.rimi.Hospitals.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +62,28 @@ public class nurseDaoImpl implements nurseDao {
         return JDBCUtils.executeQueryForCount(sql);
     }
 
+
+    @Override
+    public Integer count(Map<String, String[]> parms) {
+        // 根据条件拼接sql
+        StringBuffer sql = new StringBuffer("select count(1) from   _nursetable   where 1 = 1");
+        List<String> parmsSql = new ArrayList<>();
+        if (parms.get("nurseNumber") != null && StringUtils.isNotEmpty(parms.get("nurseNumber")[0])) {
+            sql.append(" and nurseNumber like ?");
+            parmsSql.add("%"+parms.get("nurseNumber")[0]+"%");
+            System.out.println("%"+parms.get("nurseNumber")[0]+"%");
+        }
+        if (parms.get("patientsName") != null && StringUtils.isNotEmpty(parms.get("patientsName")[0])) {
+            sql.append(" and patientsName like ?");
+            parmsSql.add("%"+parms.get("patientsName")[0]+"%");
+        }
+        if (parms.get("gender") != null && StringUtils.isNotEmpty(parms.get("gender")[0])) {
+            sql.append(" and gender like ?");
+            parmsSql.add("%"+parms.get("gender")[0]+"%");
+        }
+        return JDBCUtils.executeQueryForCount(sql.toString(), parmsSql);
+    }
+
     /**
      * 删除护士
      * 根据护士的唯一编号
@@ -70,8 +94,8 @@ public class nurseDaoImpl implements nurseDao {
     @Override
     public int deleteNurse(String in) {
         //定义sql
-        String sql = "delete  from  _nursetable where nurseNumber="+in;
-        int i = JDBCUtils.executeUpdate(sql);
+        String sql = "delete  from  _nursetable where nurseNumber=?";
+        int i = JDBCUtils.executeUpdate(sql,in);
         return i;
     }
 
@@ -122,5 +146,31 @@ public class nurseDaoImpl implements nurseDao {
             return doctortables.get(0);
         }
         return null;
+    }
+
+
+
+    @Override
+    public List<nurse> selectByPage(int currentSize, Integer pageSize, Map<String, String[]> parms) {
+        // 根据条件拼接sql
+        StringBuffer sql = new StringBuffer("select * from _nursetable where 1 = 1");
+        List<Object> parmsSql = new ArrayList<>();
+        if (parms.get("nurseNumber") != null && StringUtils.isNotEmpty(parms.get("nurseNumber")[0])) {
+            sql.append(" and nurseNumber like ?");
+            parmsSql.add("%"+parms.get("nurseNumber")[0]+"%");
+        }
+        if (parms.get("patientsName") != null && StringUtils.isNotEmpty(parms.get("patientsName")[0])) {
+            sql.append(" and patientsName like ?");
+            parmsSql.add("%"+parms.get("patientsName")[0]+"%");
+        }
+        if (parms.get("gender") != null && StringUtils.isNotEmpty(parms.get("gender")[0])) {
+            sql.append(" and gender like ?");
+            parmsSql.add("%"+parms.get("gender")[0]+"%");
+        }
+        // 追加分页
+        sql.append(" limit ?,?");
+        parmsSql.add(currentSize);
+        parmsSql.add(pageSize);
+        return JDBCUtils.executeQuery(nurse.class, sql.toString(), parmsSql);
     }
 }

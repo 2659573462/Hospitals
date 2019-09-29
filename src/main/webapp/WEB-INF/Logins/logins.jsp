@@ -1,11 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>医院管理系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/Site.css" rel="stylesheet" type="text/css" />
     <link href="../../css/zy.layout.css" rel="stylesheet" />
     <link href="../../css/zy.form.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="img/admei.ico"/>
 <%--    <link href="../../css/font-awesome.min.css" rel="stylesheet" />--%>
     <style type="text/css">
         .headerlitooleulsubitem_gray {
@@ -203,26 +208,30 @@
         iframe {
             border: none;
         }
+        #lalast{
+        margin:6px -84px 0;
+        }
+        #annniu{
+            margin:5px 30px 0px 0px ;
+        }
     </style>
     <link href="../../css/zy.menu.css" rel="stylesheet" />
 </head>
 
 <body>
 <div class="dvheader">
-    <div class="dvheadertools">
+    <div class="dvheadertools" >
         <span class="headerspantitle">医院管理系统</span>
-        <ul class="headerultools">
-
-            <li class="headerlitools_info headerlitools" style="background-color: #075597">
-                <div class="headeruserface" style="text-align: center;"><i class="icon-user" style="color: black;font-size: 19px;"></i></div>
-                管理员<i style="margin-left: 8px;" class="icon-caret-down"></i>
-                <ul class="headerlitools_ulinfo">
-
-                    <li style="border-top: 1px solid #E4ECF3;">
-                        <i class="icon-off" style="margin-right: 10px;"></i>
-                        <a style="color: black; text-decoration: none;">退出</a>
-                    </li>
+        <ul class="headerultools" id="annniu">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    管理 <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu"  id="lalast">
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/HospitalsServlet?transmits=Hospout">退出登录</a></li>
                 </ul>
+            </div>
             </li>
         </ul>
     </div>
@@ -243,16 +252,16 @@
                 <a href="/HospitalsServlet?transmits=indexPatients" target="right">
                     <li>病人管理</li>
                 </a>
-                <a href="#" target="right">
-                    <li>请假管理</li>
-                </a>
-                <a href="#" target="right">
+<%--                <a href="" target="right">--%>
+<%--                    <li>请假管理</li>--%>
+<%--                </a>--%>
+                <a href="/HospitalsServlet?transmits=indexDarg" target="right">
                     <li>药品管理</li>
                 </a>
-                <a href="#" target="right">
+                <a href="/HospitalsServlet?transmits=indexThesection" target="right">
                     <li>科室管理</li>
                 </a>
-                <a href="#" target="right"><li >修改密码</li></a>
+                <a href="/HospitalsServlet?transmits=updatePaw" target="right"><li >修改密码</li></a>
             </ul>
         </li>
     </ul>
@@ -260,6 +269,13 @@
         <iframe src="/HospitalsServlet?transmits=indexHospitaltaffS" scrolling="no" width="100%" height="898px" name="right" border="none"></iframe>
     </div>
 </div>
+
+
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+</body>
 
 </body>
 </html>

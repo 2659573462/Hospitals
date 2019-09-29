@@ -7,4 +7,6 @@ package com.rimi.Hospitals.serice;
 public interface ILoginService {
 
     boolean login(String username, String password, String remember);
+
+    int updatePaw(String password,String username);
 }

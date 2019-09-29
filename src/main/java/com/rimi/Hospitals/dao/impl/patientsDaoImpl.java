@@ -69,8 +69,8 @@ public class patientsDaoImpl implements patientsDao {
     @Override
     public int deleteNurse(String in) {
         //定义sql
-        String sql = "delete  from  _patientstable where medicalRecord="+in;
-        int i = JDBCUtils.executeUpdate(sql);
+        String sql = "delete  from  _patientstable where medicalRecord=?";
+        int i = JDBCUtils.executeUpdate(sql,in);
         return i;
     }
 

@@ -1,32 +1,30 @@
 package com.rimi.Hospitals.serice.impl;
 
 import com.rimi.Hospitals.common.Page;
-import com.rimi.Hospitals.dao.impl.DoctortableDaoImpl;
-import com.rimi.Hospitals.dao.impl.nurseDaoImpl;
-import com.rimi.Hospitals.dao.nurseDao;
-import com.rimi.Hospitals.entity.Doctortable;
-import com.rimi.Hospitals.entity.nurse;
-import com.rimi.Hospitals.serice.nurseSerice;
+import com.rimi.Hospitals.dao.grupDao;
+import com.rimi.Hospitals.dao.impl.grupDaoImpl;
+import com.rimi.Hospitals.entity.drug;
+import com.rimi.Hospitals.serice.drugSerice;
 
 import java.util.List;
 import java.util.Map;
 
 /**
  * @author chenjin
- * @date 2019/9/27 14:22
+ * @date 2019/9/28 1:28
  */
-public class nurseSericeImpl implements nurseSerice {
-    private nurseDao nurseD = new nurseDaoImpl();
+public class drugSericeImpl implements drugSerice {
+    private grupDao grupdao=new grupDaoImpl();
     /**
-     * 查询所有的护士信息
+     * 查询所有的药品信息
      *
      * @return
      */
     @Override
-    public List<nurse> selectNurse() {
-        List<nurse> doctors=nurseD.selectNurseTable();
-        if (doctors!=null && doctors.size() >0) {
-            return doctors;
+    public List<drug> selectGrup() {
+        List<drug> drugs = grupdao.selectGrupTable();
+        if (drugs!=null && drugs.size() >0) {
+            return drugs;
         }
         return null;
     }
@@ -39,9 +37,9 @@ public class nurseSericeImpl implements nurseSerice {
      * @return
      */
     @Override
-    public List<nurse> selectListServlce(Integer currentPage, Integer pageSize) {
+    public List<drug> selectListServlce(Integer currentPage, Integer pageSize) {
         //1.直接执行dao层方法获取到数据
-        List<nurse> doctors=nurseD.selectLin(currentPage,pageSize);
+        List<drug> doctors=grupdao.selectLin(currentPage,pageSize);
         //2.检查数据是否为空
         if (doctors!=null && doctors.size() >0) {
             return doctors;
@@ -56,7 +54,7 @@ public class nurseSericeImpl implements nurseSerice {
      * @return 分页后的信息, 这个针对的是book书对象的借阅信息
      */
     @Override
-    public Page<nurse> findPagedBooks(Page page) {
+    public Page<drug> findPagedBooks(Page page) {
         //1.分页查询
         //2.获取分页的条件
         Integer currentPage = page.getCurrentPage();
@@ -67,7 +65,7 @@ public class nurseSericeImpl implements nurseSerice {
             currentPage = 0;
         }
         //3.通过查询获取总条数
-        Integer count = nurseD.count();
+        Integer count = grupdao.count();
         page.setTotalCount(count);
         //4.判断分页开始的位置是否大于总条数
         int currentSize = currentPage * pageSize;
@@ -75,35 +73,22 @@ public class nurseSericeImpl implements nurseSerice {
             currentSize = (page.getPageCount() - 1) * pageSize;
         }
         //5.通过分页条件查询,并获取结果列表
-        List<nurse> booksList = nurseD.selectLin(currentSize,pageSize);
+        List<drug> booksList = grupdao.selectLin(currentSize,pageSize);
         //6.把结果存放到page对象中
         page.setPageData(booksList);
         return page;
     }
 
-    @Override
-    public Page<nurse> findPagedBooks(Page page, Map<String, String[]> parms) {
-        // 根据条件查询所有的记录
-        Integer count = nurseD.count(parms);
-        page.setTotalCount(count);
-        // 调用方法
-        for (String s : parms.keySet()) {
-            System.out.println(s+"----"+parms.get(s)[0]);
-        }
-        List<nurse> books = nurseD.selectByPage(page.getCurrentSize(), page.getPageSize(), parms);
-        page.setPageData(books);
-        return page;
-    }
-
     /**
-     * 传入护士的唯一工作号
+     * 传入药品的唯一国字号
+     * 删除这条数据
      *
      * @param in
      * @return
      */
     @Override
-    public int deleteHosp(String in) {
-        int i = nurseD.deleteNurse(in);
+    public int deleteGrup(String in) {
+        int i = grupdao.deleteGrup(in);
         return i;
     }
 
@@ -113,9 +98,9 @@ public class nurseSericeImpl implements nurseSerice {
      * @param params
      */
     @Override
-    public void addHospitals(Map<String, String[]> params) {
+    public void addGrup(Map<String, String[]> params) {
         //1.添加数据
-        nurseD.addNurse(params);
+        grupdao.addGrup(params);
     }
 
     /**
@@ -124,9 +109,9 @@ public class nurseSericeImpl implements nurseSerice {
      * @param parameterMap
      */
     @Override
-    public void updateHospitals(Map<String, String[]> parameterMap) {
+    public void updateGrup(Map<String, String[]> parameterMap) {
         //1.更新数据
-        nurseD.updateNurse(parameterMap);
+        grupdao.updateGrup(parameterMap);
     }
 
     /**
@@ -136,8 +121,8 @@ public class nurseSericeImpl implements nurseSerice {
      * @return
      */
     @Override
-    public nurse selectId(String id) {
-        nurse nurse = nurseD.selectId(id);
+    public drug selectGrupId(String id) {
+        drug nurse = grupdao.selectGrupId(id);
         if (nurse!=null) {
             return nurse;
         }

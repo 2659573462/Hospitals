@@ -22,4 +22,10 @@ public class ILoginServiceImpl implements ILoginService {
         }
         return false;
     }
+
+    @Override
+    public int updatePaw(String password ,String username) {
+        int i = userDao.updatePaw(password,username);
+        return i;
+    }
 }

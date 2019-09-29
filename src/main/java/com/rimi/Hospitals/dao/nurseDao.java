@@ -33,21 +33,27 @@ public interface nurseDao {
      */
     Integer count();
 
+
     /**
-     * 删除医生数据更具医生的工号
+     * 查询数据的总数
+     * @return
+     */
+    Integer count(Map<String, String[]> parms);
+    /**
+     * 删除护士数据更具医生的工号
      * @param in
      * @return
      */
     int deleteNurse(String in);
 
     /**
-     * 添加医生数据
+     * 添加护士数据
      * @param params
      */
     void addNurse(Map<String, String[]> params);
 
     /**
-     * 更新医生数据
+     * 更新护士数据
      * @param parameterMap
      */
     void updateNurse(Map<String, String[]> parameterMap);
@@ -58,4 +64,6 @@ public interface nurseDao {
      * @return
      */
     nurse selectId(String id);
+
+    List<nurse> selectByPage(int currentSize, Integer pageSize, Map<String, String[]> parms);
 }

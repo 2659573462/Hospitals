@@ -32,4 +32,14 @@ public class IUserDaoImpl implements IUserDao {
         }
         return null;
     }
+
+    @Override
+    public int updatePaw(String password,String username) {
+        String pwd = PwdUtils.getPwd(password);
+        String use = PwdUtils.getPwd(username);
+        String sql = "update _user set password = ? where username = ?";
+        int i = JDBCUtils.executeUpdate(sql, pwd,use);
+        return i;
+
+    }
 }

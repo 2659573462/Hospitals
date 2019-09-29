@@ -247,7 +247,7 @@
                                     <div style="width:900px;" class="form-group">
                                         <label for="employeescard" class="col-md-2 control-label">工作证号:</label>
                                         <div class="col-md-6">
-                                            <input style="width:300px;" type="text" class="form-control" id="employeescard"
+                                            <input style="width:300px;" type="text" class="form-control" id="employeescard"   readonly="readonly"
                                                    name="employeescard" />
                                         </div>
                                     </div>

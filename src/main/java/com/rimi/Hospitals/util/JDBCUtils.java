@@ -9,10 +9,8 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
-import java.util.Properties;
 
 /**
  * 数据连接工具
@@ -178,7 +176,14 @@ public class JDBCUtils {
             if (params != null) {
                 // 遍历参数
                 for (int i = 0; i < params.length; i++) {
-                    ps.setObject(i + 1, params[i]);
+                    if (params[i] instanceof Collection) {
+                        List list1 = (List)params[i];
+                        for (int j = 0; j < list1.size(); j++) {
+                            ps.setObject(j+1,list1.get(j));
+                        }
+                    } else {
+                        ps.setObject(i + 1, params[i]);
+                    }
                 }
             }
             // 执行sql
@@ -268,7 +273,14 @@ public class JDBCUtils {
             if (params != null) {
                 // 遍历参数
                 for (int i = 0; i < params.length; i++) {
-                    ps.setObject(i + 1, params[i]);
+                    if (params[i] instanceof Collection) {
+                        List list  = (List) params[i];
+                        for (int j = 0; j < list.size(); j++) {
+                            ps.setObject(j+1,list.get(j));
+                        }
+                    } else {
+                        ps.setObject(i + 1, params[i]);
+                    }
                 }
             }
             // 执行sql

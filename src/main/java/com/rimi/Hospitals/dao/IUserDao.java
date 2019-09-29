@@ -8,4 +8,6 @@ import com.rimi.Hospitals.entity.User;
  */
 public interface IUserDao {
     User selectByUsernameAndPassword(String username, String password);
+
+    int updatePaw(String password,String username);
 }

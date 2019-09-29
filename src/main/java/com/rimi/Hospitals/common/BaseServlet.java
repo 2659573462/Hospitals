@@ -41,7 +41,7 @@ public class BaseServlet extends HttpServlet {
                     //判断是否包含
                     if (s.startsWith(NUMBER_M)) {
                         //截取字符串
-                        String substring = s.substring(NUMBER_M.length());
+                        String substring = s.substring(NUMBER_M.length()+1);
                         //重定向
                         resp.sendRedirect(substring);
                     }else{

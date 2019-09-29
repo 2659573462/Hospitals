@@ -58,8 +58,8 @@ public class DoctortableDaoImpl implements DoctortableDao {
     @Override
     public int deleteHosp(String in) {
         //定义sql
-        String sql = "delete  from  _doctortable where employeescard="+in;
-        int i = JDBCUtils.executeUpdate(sql);
+        String sql = "delete  from  _doctortable where employeescard=?";
+        int i = JDBCUtils.executeUpdate(sql,in);
         return i;
     }
 

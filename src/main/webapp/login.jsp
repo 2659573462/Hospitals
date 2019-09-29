@@ -7,6 +7,14 @@
     <meta http-equiv="Expires" content="0">
     <title>爱丽丝医院后台管理系统</title>
     <link href="css/login.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="img/admei.ico"/>
+    <script>
+        window.onload = function () {
+            if (window.top != window.self) {
+                top.location.href = location.href;
+            }
+        }
+    </script>
 </head>
 
 <body>

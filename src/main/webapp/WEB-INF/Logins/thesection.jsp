@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/amazeui.min.css" />
     <link rel="stylesheet" href="css/admin.css" />
-
     <style>
         tr>td:nth-child(-n+4){
             text-indent:20px;
@@ -29,19 +28,16 @@
             function modify(id) {
                 $.ajax({
                     type: "get",
-                    url: "${pageScope.request.contextPath}/HospitalsServlet?transmits=selectNurseId",
+                    url: "${pageScope.request.contextPath}/HospitalsServlet?transmits=selectThesection",
                     data: {"id": id},
                     success: function (result) {
                         // alert(result)
                         var obj =JSON.parse(result);
-                        $("#nurseNumber").val(obj.nurseNumber)
-                        $("#patientsName").val(obj.patientsName)
-                        if(obj.gender=="男"){
-                            $('.form-horizontal input[type="radio"]:first').prop('checked', 'true')
-                        }else{
-                            $('.form-horizontal input[type="radio"]:last').prop('checked', 'true')
-                        }
-                        $("#age").val(obj.age)
+                        $("#departmentOf").val(obj.departmentOf)
+                        $("#phone").val(obj.phone)
+                        $("#sectionOfficeAddress").val(obj.sectionOfficeAddress)
+                        $("#officesDirector").val(obj.officesDirector)
+
                     }
                 }, 'json');
                 i++;
@@ -49,23 +45,6 @@
 
             }
         }
-
-
-        // function lalat(){
-        //     var nurseNumbersq = document.getElementById("nurseNumbers");
-        //     var patientsNameq = document.getElementById("patientsName");
-        //     var genderq = document.getElementById("gender");
-        //
-        //     if(nurseNumbersq==null||nurseNumbersq==undefined){
-        //
-        //     }
-        //     var ZHI1=nurseNumbersq.value;
-        //     var ZHI2=patientsNameq.value;
-        //     var ZHI3=genderq.value;
-        //     var stmss="HospitalsServlet?transmits=selectNurseLinke?p=2;
-        //     $('#xiayiye').attr('href',stmss);
-        // }
-
     </script>
 <body style="height:714px">
 <div class="dvcontent" >
@@ -76,31 +55,9 @@
             <div class="hd">
                 <ul style="">
                     <li style="box-sizing: initial;-webkit-box-sizing: initial;" class="on">查看人员</li>
-                    <li class="" style="box-sizing: initial;-webkit-box-sizing: initial;">添加人员</li>
+                    <li class="" style="box-sizing: initial;-webkit-box-sizing: initial;">添加科室</li>
                 </ul>
             </div>
-
-            <div style="margin-top: 15px;">
-                <form class="form-inline search-form"
-                      method="post"  action="${pageScope.request.contextPath}/HospitalsServlet?transmits=selectNurseLinke">
-                    <div class="form-group">
-                        <label for="nurseNumbers">护士编号:</label>
-                        <input class="form-control" type="text" id="nurseNumbers" name="nurseNumber" value="${param.nurseNumber}" onmouseout="lalat()"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="patientsNames">护士姓名:</label>
-                        <input class="form-control" type="text" id="patientsNames" name="patientsName" value="${param.patientsName}" onmouseout="lalat()"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">性别:</label>
-                        <input class="form-control" type="text" id="gender" name="gender" value="${param.gender}" onmouseout="lalat()"/>
-                    </div>
-                    <button type="submit" class="btn btn-default">
-                        <span class="glyphicon glyphicon-search"></span> 查询
-                    </button>
-                </form>
-            </div>
-
             <div class="bd">
                 <ul style="display: block;padding: 20px;">
                     <li>
@@ -109,25 +66,25 @@
                             <table class="table" id="tbRecord">
                                 <thead>
                                 <tr>
-                                    <th>护士编号</th>
-                                    <th>护士姓名</th>
-                                    <th>性别</th>
-                                    <th>年龄</th>
+                                    <th>科室名</th>
+                                    <th>联系电话</th>
+                                    <th>科室地址</th>
+                                    <th>科室主任</th>
                                     <th>编辑</th>
                                     <th>删除</th>
                                 </tr>
                                 <c:forEach items="${cards.pageData}" var="hospitals">
                                     <tr>
-                                        <td>${hospitals.nurseNumber}</td>
-                                        <td>${hospitals.patientsName}</td>
-                                        <td>${hospitals.gender}</td>
-                                        <td>${hospitals.age}</td>
+                                        <td>${hospitals.departmentOf}</td>
+                                        <td>${hospitals.phone}</td>
+                                        <td>${hospitals.sectionOfficeAddress}</td>
+                                        <td>${hospitals.officesDirector}</td>
                                         <td>
-                                            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" onmouseover="modify('${hospitals.nurseNumber}')">
+                                            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" onmouseover="modify('${hospitals.departmentOf}')">
                                                 修改</a>
                                         </td>
                                         <td>
-                                            <a class="btn btn-danger btn-sm del" href="#" onclick="btn_delete('${hospitals.nurseNumber}')" ><i class="icon-trash bigger-120" ></i>删除</a>
+                                            <a class="btn btn-danger btn-sm del" href="#" onclick="btn_delete('${hospitals.departmentOf}')" ><i class="icon-trash bigger-120" ></i>删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -146,24 +103,24 @@
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
                             <li>
-                                <a href="javaScript:void(0);" data-page="${page.currentPage - 1}"   class="page">
+                                <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=indexThesection&p=${cards.currentPage-1}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             <c:forEach begin="1" end="${cards.pageCount}" step="1" var="p">
                                 <c:if test="${cards.currentPage == p}">
                                     <li >
-                                        <a  href="javaScript:void(0);" data-page="${p}"   class="page">${p}</a>
+                                        <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=indexThesection&p=${p}">${p}</a>
                                     </li>
                                 </c:if>
                                 <c:if test="${cards.currentPage != p}">
                                     <li>
-                                        <a  href="javaScript:void(0);" data-page="${p}"   class="page">${p}</a>
+                                        <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=indexThesection&p=${p}">${p}</a>
                                     </li>
                                 </c:if>
                             </c:forEach>
                             <li>
-                                <a href="javaScript:void(0);" data-page="${page.currentPage - 1}" class="page">
+                                <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=indexThesection&p=${cards.currentPage+1}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
@@ -187,48 +144,48 @@
                                         <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4"
                                              style="padding-top: 30px;">
                                             <form class="am-form am-form-horizontal"
-                                                  action="${pageScope.request.contextPath}/HospitalsServlet?transmits=addNurse" method="post">
+                                                  action="${pageScope.request.contextPath}/HospitalsServlet?transmits=addThesection" method="post">
 
                                                 <div class="am-form-group">
                                                     <label for="user-name" class="am-u-sm-3 am-form-label">
-                                                        护士编号</label>
+                                                        科室名称</label>
                                                     <div class="am-u-sm-9">
                                                         <input type="text" id="user-name" required
-                                                               placeholder="" name="nurseNumber">
+                                                               placeholder="" name="departmentOf">
                                                     </div>
                                                 </div>
 
                                                 <div class="am-form-group">
                                                     <label for="user-name" class="am-u-sm-3 am-form-label">
-                                                        护士姓名</label>
+                                                        联系电话</label>
                                                     <div class="am-u-sm-9">
                                                         <input type="text"  required
-                                                               placeholder="" name="patientsName">
+                                                               placeholder="" name="phone">
                                                     </div>
                                                 </div>
 
                                                 <div class="am-form-group">
                                                     <label for="user-name" class="am-u-sm-3 am-form-label">
-                                                        性别</label>
-                                                    <div class="am-u-sm-9">
-                                                        <input  type="radio" checked="checked" name="gender" value="男" />男
-                                                        <input  type="radio"  name="gender" value="女"/>女
-                                                    </div>
-                                                </div>
-
-                                                <div class="am-form-group">
-                                                    <label for="user-name" class="am-u-sm-3 am-form-label">
-                                                        年龄</label>
+                                                        科室地址</label>
                                                     <div class="am-u-sm-9">
                                                         <input type="text"  required
-                                                               placeholder="" name="age">
+                                                               placeholder="" name="sectionOfficeAddress">
+                                                    </div>
+                                                </div>
+
+                                                <div class="am-form-group">
+                                                    <label for="user-name" class="am-u-sm-3 am-form-label">
+                                                        科室主任</label>
+                                                    <div class="am-u-sm-9">
+                                                        <input type="text"  required
+                                                               placeholder="" name="officesDirector">
                                                     </div>
                                                 </div>
 
 
                                                 <div class="am-form-group">
                                                     <div class="am-u-sm-9 am-u-sm-push-3">
-                                                        <input type="submit" class="am-btn am-btn-success" value="添加护士" />
+                                                        <input type="submit" class="am-btn am-btn-success" value="添加科室" />
                                                     </div>
                                                 </div>
                                             </form>
@@ -253,40 +210,40 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel">修改医生信息</h4>
+                        <h4 class="modal-title" id="myModalLabel">修改科室信息</h4>
                     </div>
                     <div class="modal-body">
                         <div class="container">
 
                             <div class="row">
-                                <form class="form-horizontal" action="${pageScope.request.contextPath}/HospitalsServlet?transmits=updateNurse"
+                                <form class="form-horizontal" action="${pageScope.request.contextPath}/HospitalsServlet?transmits=updateThesection"
                                       method="post">
                                     <div style="width:900px;" class="form-group">
-                                        <label for="nurseNumber" class="col-md-2 control-label">护士编号:</label>
+                                        <label for="departmentOf" class="col-md-2 control-label">科室名称:</label>
                                         <div class="col-md-6">
-                                            <input style="width:300px;" type="text" class="form-control" id="nurseNumber"   readonly="readonly"
-                                                   name="nurseNumber" />
+                                            <input style="width:300px;" type="text" class="form-control" id="departmentOf"   readonly="readonly"
+                                                   name="departmentOf" />
                                         </div>
                                     </div>
                                     <div style="width:900px;" class="form-group">
-                                        <label for="patientsName" class="col-md-2 control-label">护士姓名:</label>
+                                        <label for="phone" class="col-md-2 control-label">联系电话:</label>
                                         <div class="col-md-6">
                                             <input style="width:300px;" type="text" class="form-control"
-                                                   id="patientsName" name="patientsName"  />
+                                                   id="phone" name="phone"  />
                                         </div>
                                     </div>
                                     <div style="width:900px;" class="form-group">
-                                        <label  class="col-md-2 control-label">性别:</label>
+                                        <label  class="col-md-2 control-label">科室地址:</label>
                                         <div class="col-md-6">
-                                            <input  type="radio" name="gender" value="男" />男
-                                            <input  type="radio" name="gender" value="女"/>女
+                                            <input style="width:300px;" type="text" class="form-control"
+                                                   id="sectionOfficeAddress" name="sectionOfficeAddress"  />
                                         </div>
                                     </div>
                                     <div style="width:900px;" class="form-group">
-                                        <label for="age" class="col-md-2 control-label">年龄：</label>
+                                        <label for="officesDirector" class="col-md-2 control-label">科室主任：</label>
                                         <div class="col-md-6">
-                                            <input style="width:300px;" type="text" class="form-control" id="age"
-                                                   name="age"  min="0" value="0" onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="请输入数字")/>
+                                            <input style="width:300px;" type="text" class="form-control" id="officesDirector"
+                                                   name="officesDirector" />
                                         </div>
                                     </div>
                                     <div style="width:560px;" class="form-group text-center">
@@ -327,15 +284,6 @@
         });
 
 
-        // 监听a标签的点击事件
-        $('.page').click(function () {
-            //获取a标签中的页码
-            var p = $(this).attr('data-page');
-            $('.search-form').attr('action', "${pageScope.request.contextPath}/HospitalsServlet?transmits=selectNurseLinke&p=" + p);
-            $('.search-form').submit();
-        });
-
-
 
         var btn_edit = function(id) {
             $.jq_Panel({
@@ -353,7 +301,7 @@
                 btnOkClick: function() {
                     $.ajax({
                         type: "get",
-                        url: "${pageScope.request.contextPath}/HospitalsServlet?transmits=deleteNurse",
+                        url: "${pageScope.request.contextPath}/HospitalsServlet?transmits=deleteThesection",
                         data: { id: id },
                         success: function(result) {
                             if(result) {

@@ -271,7 +271,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel">修改医生信息</h4>
+                        <h4 class="modal-title" id="myModalLabel">修改病人信息</h4>
                     </div>
                     <div class="modal-body">
                         <div class="container">
@@ -282,7 +282,7 @@
                                     <div style="width:900px;" class="form-group">
                                         <label for="medicalRecord" class="col-md-2 control-label">病历号:</label>
                                         <div class="col-md-6">
-                                            <input style="width:300px;" type="text" class="form-control" id="medicalRecord"
+                                            <input style="width:300px;" type="text" class="form-control" id="medicalRecord"   readonly="readonly"
                                                    name="medicalRecord" />
                                         </div>
                                     </div>

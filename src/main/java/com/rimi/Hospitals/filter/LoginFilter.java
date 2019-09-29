@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author shangzf
  * @date 2019/9/17 16:22
  */
-public class LoginFilter implements Filter {
+public class  LoginFilter implements Filter {
 
     @Override
     public void destroy() {

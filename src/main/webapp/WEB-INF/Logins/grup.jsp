@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/amazeui.min.css" />
     <link rel="stylesheet" href="css/admin.css" />
-
     <style>
         tr>td:nth-child(-n+4){
             text-indent:20px;
@@ -29,19 +28,16 @@
             function modify(id) {
                 $.ajax({
                     type: "get",
-                    url: "${pageScope.request.contextPath}/HospitalsServlet?transmits=selectNurseId",
+                    url: "${pageScope.request.contextPath}/HospitalsServlet?transmits=selectDrugId",
                     data: {"id": id},
                     success: function (result) {
-                        // alert(result)
                         var obj =JSON.parse(result);
-                        $("#nurseNumber").val(obj.nurseNumber)
-                        $("#patientsName").val(obj.patientsName)
-                        if(obj.gender=="男"){
-                            $('.form-horizontal input[type="radio"]:first').prop('checked', 'true')
-                        }else{
-                            $('.form-horizontal input[type="radio"]:last').prop('checked', 'true')
-                        }
-                        $("#age").val(obj.age)
+                        $("#approvalnumber").val(obj.approvalnumber)
+                        $("#drugname").val(obj.drugname)
+                        $("#instruction").val(obj.instruction)
+                        $("#directionsforuse").val(obj.directionsforuse)
+                        $("#manufacturingenterprise").val(obj.manufacturingenterprise)
+                        $("#periodofvalidity").val(obj.periodofvalidity)
                     }
                 }, 'json');
                 i++;
@@ -49,23 +45,6 @@
 
             }
         }
-
-
-        // function lalat(){
-        //     var nurseNumbersq = document.getElementById("nurseNumbers");
-        //     var patientsNameq = document.getElementById("patientsName");
-        //     var genderq = document.getElementById("gender");
-        //
-        //     if(nurseNumbersq==null||nurseNumbersq==undefined){
-        //
-        //     }
-        //     var ZHI1=nurseNumbersq.value;
-        //     var ZHI2=patientsNameq.value;
-        //     var ZHI3=genderq.value;
-        //     var stmss="HospitalsServlet?transmits=selectNurseLinke?p=2;
-        //     $('#xiayiye').attr('href',stmss);
-        // }
-
     </script>
 <body style="height:714px">
 <div class="dvcontent" >
@@ -79,28 +58,6 @@
                     <li class="" style="box-sizing: initial;-webkit-box-sizing: initial;">添加人员</li>
                 </ul>
             </div>
-
-            <div style="margin-top: 15px;">
-                <form class="form-inline search-form"
-                      method="post"  action="${pageScope.request.contextPath}/HospitalsServlet?transmits=selectNurseLinke">
-                    <div class="form-group">
-                        <label for="nurseNumbers">护士编号:</label>
-                        <input class="form-control" type="text" id="nurseNumbers" name="nurseNumber" value="${param.nurseNumber}" onmouseout="lalat()"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="patientsNames">护士姓名:</label>
-                        <input class="form-control" type="text" id="patientsNames" name="patientsName" value="${param.patientsName}" onmouseout="lalat()"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">性别:</label>
-                        <input class="form-control" type="text" id="gender" name="gender" value="${param.gender}" onmouseout="lalat()"/>
-                    </div>
-                    <button type="submit" class="btn btn-default">
-                        <span class="glyphicon glyphicon-search"></span> 查询
-                    </button>
-                </form>
-            </div>
-
             <div class="bd">
                 <ul style="display: block;padding: 20px;">
                     <li>
@@ -109,25 +66,29 @@
                             <table class="table" id="tbRecord">
                                 <thead>
                                 <tr>
-                                    <th>护士编号</th>
-                                    <th>护士姓名</th>
-                                    <th>性别</th>
-                                    <th>年龄</th>
+                                    <th>批文号</th>
+                                    <th>药名</th>
+                                    <th>用法</th>
+                                    <th>主要医治</th>
+                                    <th>生产企业</th>
+                                    <th>有效期</th>
                                     <th>编辑</th>
                                     <th>删除</th>
                                 </tr>
                                 <c:forEach items="${cards.pageData}" var="hospitals">
                                     <tr>
-                                        <td>${hospitals.nurseNumber}</td>
-                                        <td>${hospitals.patientsName}</td>
-                                        <td>${hospitals.gender}</td>
-                                        <td>${hospitals.age}</td>
+                                        <td>${hospitals.approvalnumber}</td>
+                                        <td>${hospitals.drugname}</td>
+                                        <td>${hospitals.instruction}</td>
+                                        <td>${hospitals.directionsforuse}</td>
+                                        <td>${hospitals.manufacturingenterprise}</td>
+                                        <td>${hospitals.periodofvalidity}</td>
                                         <td>
-                                            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" onmouseover="modify('${hospitals.nurseNumber}')">
+                                            <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" onmouseover="modify('${hospitals.approvalnumber}')">
                                                 修改</a>
                                         </td>
                                         <td>
-                                            <a class="btn btn-danger btn-sm del" href="#" onclick="btn_delete('${hospitals.nurseNumber}')" ><i class="icon-trash bigger-120" ></i>删除</a>
+                                            <a class="btn btn-danger btn-sm del" href="#" onclick="btn_delete('${hospitals.approvalnumber}')" ><i class="icon-trash bigger-120" ></i>删除</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -146,24 +107,24 @@
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
                             <li>
-                                <a href="javaScript:void(0);" data-page="${page.currentPage - 1}"   class="page">
+                                <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=indexDarg&p=${cards.currentPage-1}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             <c:forEach begin="1" end="${cards.pageCount}" step="1" var="p">
                                 <c:if test="${cards.currentPage == p}">
                                     <li >
-                                        <a  href="javaScript:void(0);" data-page="${p}"   class="page">${p}</a>
+                                        <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=indexDarg&p=${p}">${p}</a>
                                     </li>
                                 </c:if>
                                 <c:if test="${cards.currentPage != p}">
                                     <li>
-                                        <a  href="javaScript:void(0);" data-page="${p}"   class="page">${p}</a>
+                                        <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=indexDarg&p=${p}">${p}</a>
                                     </li>
                                 </c:if>
                             </c:forEach>
                             <li>
-                                <a href="javaScript:void(0);" data-page="${page.currentPage - 1}" class="page">
+                                <a href="${pageScope.request.contextPath}/HospitalsServlet?transmits=indexDarg&p=${cards.currentPage+1}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
@@ -187,48 +148,66 @@
                                         <div class="am-u-sm-12 am-u-md-8 am-u-md-pull-4"
                                              style="padding-top: 30px;">
                                             <form class="am-form am-form-horizontal"
-                                                  action="${pageScope.request.contextPath}/HospitalsServlet?transmits=addNurse" method="post">
+                                                  action="${pageScope.request.contextPath}/HospitalsServlet?transmits=addDrug" method="post">
 
                                                 <div class="am-form-group">
                                                     <label for="user-name" class="am-u-sm-3 am-form-label">
-                                                        护士编号</label>
+                                                        药品国字号</label>
                                                     <div class="am-u-sm-9">
                                                         <input type="text" id="user-name" required
-                                                               placeholder="" name="nurseNumber">
+                                                               placeholder="" name="approvalnumber">
                                                     </div>
                                                 </div>
 
                                                 <div class="am-form-group">
                                                     <label for="user-name" class="am-u-sm-3 am-form-label">
-                                                        护士姓名</label>
+                                                        药名</label>
                                                     <div class="am-u-sm-9">
                                                         <input type="text"  required
-                                                               placeholder="" name="patientsName">
+                                                               placeholder="" name="drugname">
                                                     </div>
                                                 </div>
 
                                                 <div class="am-form-group">
                                                     <label for="user-name" class="am-u-sm-3 am-form-label">
-                                                        性别</label>
-                                                    <div class="am-u-sm-9">
-                                                        <input  type="radio" checked="checked" name="gender" value="男" />男
-                                                        <input  type="radio"  name="gender" value="女"/>女
-                                                    </div>
-                                                </div>
-
-                                                <div class="am-form-group">
-                                                    <label for="user-name" class="am-u-sm-3 am-form-label">
-                                                        年龄</label>
+                                                        用法</label>
                                                     <div class="am-u-sm-9">
                                                         <input type="text"  required
-                                                               placeholder="" name="age">
+                                                               placeholder="" name="instruction">
+                                                    </div>
+                                                </div>
+
+                                                <div class="am-form-group">
+                                                    <label for="user-name" class="am-u-sm-3 am-form-label">
+                                                        主要医治</label>
+                                                    <div class="am-u-sm-9">
+                                                        <input type="text"  required
+                                                               placeholder="" name="directionsforuse">
+                                                    </div>
+                                                </div>
+
+                                                <div class="am-form-group">
+                                                    <label for="user-name" class="am-u-sm-3 am-form-label">
+                                                        生产企业</label>
+                                                    <div class="am-u-sm-9">
+                                                        <input type="text"  required
+                                                               placeholder="" name="manufacturingenterprise">
+                                                    </div>
+                                                </div>
+
+                                                <div class="am-form-group">
+                                                    <label for="user-name" class="am-u-sm-3 am-form-label">
+                                                        有效期</label>
+                                                    <div class="am-u-sm-9">
+                                                        <input type="text"  required
+                                                               placeholder="" name="periodofvalidity">
                                                     </div>
                                                 </div>
 
 
                                                 <div class="am-form-group">
                                                     <div class="am-u-sm-9 am-u-sm-push-3">
-                                                        <input type="submit" class="am-btn am-btn-success" value="添加护士" />
+                                                        <input type="submit" class="am-btn am-btn-success" value="添加药品" />
                                                     </div>
                                                 </div>
                                             </form>
@@ -253,42 +232,71 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel">修改医生信息</h4>
+                        <h4 class="modal-title" id="myModalLabel">修改药品信息</h4>
                     </div>
                     <div class="modal-body">
                         <div class="container">
 
                             <div class="row">
-                                <form class="form-horizontal" action="${pageScope.request.contextPath}/HospitalsServlet?transmits=updateNurse"
+                                <form class="form-horizontal" action="${pageScope.request.contextPath}/HospitalsServlet?transmits=updateDrug"
                                       method="post">
+
+<%--                                    <div style="width:900px;" class="form-group">--%>
+<%--                                        <label  class="col-md-2 control-label">药品国字号:</label>--%>
+<%--                                        <div class="col-md-6">--%>
+<%--                                            <input style="width:300px;" type="text" class="form-control"--%>
+<%--                                                   id="approvalnumber"  disabled="disabled"--%>
+<%--                                                   name="approvalnumber" />--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
                                     <div style="width:900px;" class="form-group">
-                                        <label for="nurseNumber" class="col-md-2 control-label">护士编号:</label>
+                                        <label  class="col-md-2 control-label">药名:</label>
                                         <div class="col-md-6">
-                                            <input style="width:300px;" type="text" class="form-control" id="nurseNumber"   readonly="readonly"
-                                                   name="nurseNumber" />
+                                            <input style="width:300px;" type="text" class="form-control"   readonly="readonly"
+                                                   id="approvalnumber" name="approvalnumber"  />
                                         </div>
                                     </div>
+
                                     <div style="width:900px;" class="form-group">
-                                        <label for="patientsName" class="col-md-2 control-label">护士姓名:</label>
+                                        <label  class="col-md-2 control-label">药名:</label>
                                         <div class="col-md-6">
                                             <input style="width:300px;" type="text" class="form-control"
-                                                   id="patientsName" name="patientsName"  />
+                                                   id="drugname" name="drugname"  />
                                         </div>
                                     </div>
+
                                     <div style="width:900px;" class="form-group">
-                                        <label  class="col-md-2 control-label">性别:</label>
+                                        <label  class="col-md-2 control-label">用法:</label>
                                         <div class="col-md-6">
-                                            <input  type="radio" name="gender" value="男" />男
-                                            <input  type="radio" name="gender" value="女"/>女
+                                            <input style="width:300px;" type="text" class="form-control"
+                                                   id="instruction" name="instruction"  />
                                         </div>
                                     </div>
+
                                     <div style="width:900px;" class="form-group">
-                                        <label for="age" class="col-md-2 control-label">年龄：</label>
+                                        <label class="col-md-2 control-label">主要医治：</label>
                                         <div class="col-md-6">
-                                            <input style="width:300px;" type="text" class="form-control" id="age"
-                                                   name="age"  min="0" value="0" onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="请输入数字")/>
+                                            <input style="width:300px;" type="text" class="form-control" id="directionsforuse"
+                                                   name="directionsforuse" />
                                         </div>
                                     </div>
+
+                                    <div style="width:900px;" class="form-group">
+                                        <label class="col-md-2 control-label">生产企业：</label>
+                                        <div class="col-md-6">
+                                            <input style="width:300px;" type="text" class="form-control" id="manufacturingenterprise"
+                                                   name="manufacturingenterprise" />
+                                        </div>
+                                    </div>
+
+                                    <div style="width:900px;" class="form-group">
+                                        <label  class="col-md-2 control-label">有效期：</label>
+                                        <div class="col-md-6">
+                                            <input style="width:300px;" type="text" class="form-control" id="periodofvalidity"
+                                                   name="periodofvalidity" />
+                                        </div>
+                                    </div>
+
                                     <div style="width:560px;" class="form-group text-center">
                                         <button type="submit" class="btn btn-primary"   >提交</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -327,15 +335,6 @@
         });
 
 
-        // 监听a标签的点击事件
-        $('.page').click(function () {
-            //获取a标签中的页码
-            var p = $(this).attr('data-page');
-            $('.search-form').attr('action', "${pageScope.request.contextPath}/HospitalsServlet?transmits=selectNurseLinke&p=" + p);
-            $('.search-form').submit();
-        });
-
-
 
         var btn_edit = function(id) {
             $.jq_Panel({
@@ -353,7 +352,7 @@
                 btnOkClick: function() {
                     $.ajax({
                         type: "get",
-                        url: "${pageScope.request.contextPath}/HospitalsServlet?transmits=deleteNurse",
+                        url: "${pageScope.request.contextPath}/HospitalsServlet?transmits=deleteDrug",
                         data: { id: id },
                         success: function(result) {
                             if(result) {
