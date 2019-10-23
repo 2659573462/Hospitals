@@ -9,6 +9,7 @@ import com.rimi.Hospitals.util.PwdUtils;
 import com.rimi.Hospitals.util.SQLUtils;
 import com.sun.deploy.util.StringUtils;
 import org.apache.poi.ss.formula.functions.T;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @author chenjin
  * @date 2019/9/23 13:04
  */
+@Repository
 public class IUserDaoImpl implements IUserDao {
     @Override
     public User selectByUsernameAndPassword(String username, String password) {
@@ -27,6 +29,7 @@ public class IUserDaoImpl implements IUserDao {
         StringBuilder sql = sqlContext.getSql();
         String s = sql.toString();
         List<User> users = JDBCUtils.executeQuery(User.class, s, PwdUtils.getPwd(password),PwdUtils.getPwd(username));
+        System.out.println(PwdUtils.getPwd(password)+"--"+PwdUtils.getPwd(username));
         if (users!=null&&users.size()>0) {
             return users.get(0);
         }

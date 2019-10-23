@@ -33,6 +33,7 @@
                     data: {"id": id},
                     success: function (result) {
                         // alert(result)
+                        //解析
                         var obj =JSON.parse(result);
                         $("#nurseNumber").val(obj.nurseNumber)
                         $("#patientsName").val(obj.patientsName)

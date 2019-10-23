@@ -338,8 +338,23 @@
                                     <div style="width:900px;" class="form-group">
                                         <label for="age" class="col-md-2 control-label">所属科室：</label>
                                         <div class="col-md-6">
-                                            <input style="width:300px;" type="text" class="form-control" id="subordinateDepartments"
-                                                   name="subordinateDepartments"  min="0" value="0" onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="请输入数字")/>
+<%--                                            <input style="width:300px;" type="text" class="form-control" id="subordinateDepartments"--%>
+<%--                                                   name="subordinateDepartments"/>--%>
+                                                <ul class="headerultools" id="annniu">
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-primary  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            管理 <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu"  id="lalast">
+                                                            <li role="separator" class="divider"></li>
+                                                            <li><a href="/HospitalsServlet?transmits=Hospout">退出登录</a></li>
+                                                            <li><a href="/HospitalsServlet?transmits=Hospout">退出登录</a></li>
+                                                            <li><a href="/HospitalsServlet?transmits=Hospout">退出登录</a></li>
+                                                            <li><a href="/HospitalsServlet?transmits=Hospout">退出登录</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    </li>
+                                                </ul>
                                         </div>
                                     </div>
 

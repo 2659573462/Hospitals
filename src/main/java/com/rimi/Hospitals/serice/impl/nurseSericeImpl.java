@@ -87,9 +87,6 @@ public class nurseSericeImpl implements nurseSerice {
         Integer count = nurseD.count(parms);
         page.setTotalCount(count);
         // 调用方法
-        for (String s : parms.keySet()) {
-            System.out.println(s+"----"+parms.get(s)[0]);
-        }
         List<nurse> books = nurseD.selectByPage(page.getCurrentSize(), page.getPageSize(), parms);
         page.setPageData(books);
         return page;

@@ -8,8 +8,17 @@ import com.rimi.Hospitals.entity.*;
 import com.rimi.Hospitals.serice.*;
 import com.rimi.Hospitals.serice.impl.*;
 import com.rimi.Hospitals.util.CookieUtils;
+import com.rimi.Hospitals.util.PwdUtils;
 import com.rimi.Hospitals.util.StringUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.support.XmlWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -26,13 +35,14 @@ import java.util.Map;
  * @date 2019/9/22 19:55
  */
 @WebServlet("/HospitalsServlet")
-public class HospitalsServlet  extends BaseServlet {
-    private ILoginService loginService = new ILoginServiceImpl();
+public class HospitalsServlet  extends BaseServlet implements WebApplicationInitializer {
+    private ILoginService loginService;
     private IndexService deletehop=new IndexServiceImpl();
     private nurseSerice nurseSerices=new nurseSericeImpl();
     private patientsSerice pati = new patientsSericeImpl();
     private drugSerice drugSer=new drugSericeImpl();
     private thesectionSerice thesect = new thesectionSericeImpl();
+
 
     /**
      * 判断登陆
@@ -45,6 +55,9 @@ public class HospitalsServlet  extends BaseServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-config.xml");
+        ILoginService booksServiceImpl = (ILoginService) context.getBean("ILoginServiceImpl");
+        loginService=booksServiceImpl;
         boolean login=loginService.login(username,password,remember);
         String cookie = CookieUtils.getCookie(LoginConstant.LOGIN_USERNAME, request);
         String cookie1 = CookieUtils.getCookie(LoginConstant.LOGIN_PASSWORD, request);
@@ -56,8 +69,8 @@ public class HospitalsServlet  extends BaseServlet {
                 request.getSession().setAttribute("username", username);
                 //判断是否设置免密功能
                 if(request.getParameter("remember")!=null){
-                    CookieUtils.setCookie(LoginConstant.LOGIN_USERNAME, username, 7 * 24 * 60 * 60, response);
-                    CookieUtils.setCookie(LoginConstant.LOGIN_PASSWORD, password, 7 * 24 * 60 * 60, response);
+                    CookieUtils.setCookie(LoginConstant.LOGIN_USERNAME,PwdUtils.getPwd(username), 7 * 24 * 60 * 60, response);
+                    CookieUtils.setCookie(LoginConstant.LOGIN_PASSWORD,PwdUtils.getPwd(password), 7 * 24 * 60 * 60, response);
                 }
                 //进去首页页面
                 return "/WEB-INF/Logins/logins.jsp";
@@ -140,17 +153,6 @@ public class HospitalsServlet  extends BaseServlet {
      * @return
      */
     public  String indexHospitaltaffS(HttpServletRequest request, HttpServletResponse response){
-        ////响应数据
-        //response.setContentType("text/html;charset=utf-8");
-        ////获取json核心对象
-        //JSONObject jsonObject = new JSONObject();
-        ////添加相应的数据
-        //IndexServiceImpl indexService = new IndexServiceImpl();
-        //List<Doctortable> doctortables = indexService.selectListServlce(1,13 );
-        ////将数据搞出去
-        //request.setAttribute("cards",doctortables);
-        //System.out.println(doctortables);
-        //获取当前请求的页数
         String currentPage = request.getParameter("p");
         if (StringUtils.isEmpty(currentPage)){
             currentPage = "1";
@@ -253,12 +255,6 @@ public class HospitalsServlet  extends BaseServlet {
         }
         Page page = Page.of(Integer.valueOf(currentPage));
         nurseSericeImpl nurseSerice = new nurseSericeImpl();
-        // 获取查询的条件
-        //Map<String, String[]> parms = request.getParameterMap();
-        //for (String s : parms.keySet()) {
-        //    System.out.println("请求数据"+parms.get(s)[0]+"是"+s);
-        //}
-
         Page<nurse> pagedBooks = nurseSerice.findPagedBooks(page);
         request.setAttribute("cards",pagedBooks);
         return "/WEB-INF/Logins/nurse.jsp";
@@ -275,7 +271,6 @@ public class HospitalsServlet  extends BaseServlet {
     public String selectNurseLinke(HttpServletRequest request, HttpServletResponse response){
         //1.获取请求的参数
         String currentPage = request.getParameter("p");
-        System.out.println("p是"+currentPage);
         if (StringUtils.isEmpty(currentPage)){
             currentPage = "1";
         }
@@ -284,9 +279,6 @@ public class HospitalsServlet  extends BaseServlet {
         nurseSericeImpl nurseSerice = new nurseSericeImpl();
          //获取查询的条件
         Map<String, String[]> parms = request.getParameterMap();
-        for (String s : parms.keySet()) {
-            System.out.println("请求是"+s+"-----"+parms.get(s)[0]);
-        }
         Page<nurse> pagedBooks = nurseSerices.findPagedBooks(page,parms);
         request.setAttribute("cards",pagedBooks);
         return "/WEB-INF/Logins/nurse.jsp";
@@ -646,4 +638,12 @@ public class HospitalsServlet  extends BaseServlet {
         response.getWriter().print(JSONObject.toJSONString(thesectiontable));
     }
 
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        XmlWebApplicationContext appContext = new XmlWebApplicationContext();
+        appContext.setConfigLocation("C:\\Hospitals\\src\\main\\resources\\spring-config.xml");
+        ServletRegistration.Dynamic registration = servletContext.addServlet("dispatcher", new DispatcherServlet(appContext));
+        registration.setLoadOnStartup(1);
+        registration.addMapping("/");
+    }
 }
